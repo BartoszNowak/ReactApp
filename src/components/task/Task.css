@@ -1,7 +1,8 @@
 .Task
 {
-    background-color: #A7B7E7;
+    background-color: #012EB8;
     padding: 10px;
     margin: 10px;
     min-width: 500px;
+    color: white;
 }

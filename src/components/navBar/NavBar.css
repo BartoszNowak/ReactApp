@@ -1,12 +1,27 @@
 .NavBar
 {
+    position: relative;
     background-color: #AF2F2F;
-    width: 200px;
-    height: 1000px;
+    width: 180px;
+    height: 800px;
     float: left;
+    padding: 10px;
 }
 
 .Exec
 {
+    margin-top: 20px;
+    position: absolute;
+    width: 100px;
+    left: 50%;
+    margin-left: -50px;
+}
+
+.Del
+{
     margin-top: 50px;
+    position: absolute;
+    width: 100px;
+    left: 50%;
+    margin-left: -50px;
 }

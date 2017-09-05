@@ -12,7 +12,6 @@ export default class NavBar extends React.Component
                 <TaskCreation/>
                 <TaskGeneration/>
                 <button className="Exec">Execute all</button>
-                <p>Danger zone!</p>
                 <button className="Del">Delete all</button>
             </div>
         );
