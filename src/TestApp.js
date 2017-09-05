@@ -1,5 +1,5 @@
-import React/* , { Component } */ from 'react';
-import Header from './header';
+import React from 'react';
+import Header from './Header';
 
 export default class Test extends React.Component 
 {
@@ -9,12 +9,13 @@ export default class Test extends React.Component
         this.state = {"text": "Old text"};
     }
 
+    chengeTitle(text)
+    {
+        this.setState({text});
+    }
+
     render() 
     {
-        setTimeout(() => {
-            this.setState({"text": "New text"});
-        }, 5000);
-
         var list = [];
         for (var i = 0; i < 3; i++) 
         {
@@ -23,7 +24,7 @@ export default class Test extends React.Component
 
         return (
             <div className="Test">
-                <Header title={this.state.text}/>
+                <Header changeTitle={this.chengeTitle.bind(this)} title={this.state.text}/>
                 {list}
             </div>
         );
