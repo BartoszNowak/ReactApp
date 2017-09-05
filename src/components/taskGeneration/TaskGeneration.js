@@ -6,7 +6,7 @@ export default class TaskGeneration extends React.Component
     {
         return(
             <div className = "TaskCreation">
-                <p>Generate tasks:</p>
+                <h4>Generate tasks:</h4>
                 <input/>
                 <button>Create</button>
             </div>

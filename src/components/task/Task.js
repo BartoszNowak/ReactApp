@@ -9,12 +9,12 @@ export default class Task extends React.Component
             <div className = "Task">
                 <p>Task: id</p>
                 <p>Here'll be task desription...</p>
-                <p>1 + 2 + 3 + 4 + 5 + ...</p>
+                <p>1 + 2 + 3 + 4 + 5 + 6 + 7 + ...</p>
                 <p>Result: -1/12</p>
-                <button className="EditButton">
+                <button>
                     Edit
                 </button>
-                <button className="ExecButton">
+                <button>
                     Execute
                 </button>
                 <button className="DeleteButton">

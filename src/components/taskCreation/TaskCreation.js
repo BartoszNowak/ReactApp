@@ -6,7 +6,7 @@ export default class TaskCreation extends React.Component
     {
         return(
             <div className = "TaskCreation">
-                <p>Add new task:</p>
+                <h4>Add new task:</h4>
                 <input/>
                 <input/>
                 <input/>
