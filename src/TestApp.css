@@ -1,0 +1,11 @@
+.nav
+{
+    position: relative;
+}
+
+.head
+{
+    position: absolute;
+    left: 20px;
+    width: 1000px;
+}

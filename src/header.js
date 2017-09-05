@@ -14,7 +14,7 @@ export default class Header extends React.Component
         return(
             <div>
                 <h1 className = "Header">{this.props.title}</h1>
-                <input onChange={this.handleChange.bind(this)}/>
+                {/* <input onChange={this.handleChange.bind(this)}/> */}
             </div>
         );
     }

@@ -1,5 +1,9 @@
 import React from 'react';
 import Header from './Header';
+import Task from './components/task/Task';
+import NavBar from './components/navBar/NavBar';
+import TaskList from './components/taskList/TaskList';
+import './TestApp.css';
 
 export default class Test extends React.Component 
 {
@@ -16,16 +20,10 @@ export default class Test extends React.Component
 
     render() 
     {
-        var list = [];
-        for (var i = 0; i < 3; i++) 
-        {
-            list.push(<Header title={i} key={i}/>);
-        }
-
         return (
             <div className="Test">
-                <Header changeTitle={this.chengeTitle.bind(this)} title={this.state.text}/>
-                {list}
+                <NavBar className="nav"/>
+                <TaskList/>
             </div>
         );
     }
