@@ -1,0 +1,50 @@
+.NavBar
+{
+    position: relative;
+    background-color: #24292e;
+    width: 180px;
+    height: 800px;
+    float: left;
+    padding: 10px;
+    color: #61dafb;
+    border-right-style: solid;
+    border-right-width: 1px;
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
+}
+
+.Exec
+{
+    margin-top: 20px;
+    position: absolute;
+    width: 100px;
+    left: 50%;
+    margin-left: -50px;
+}
+
+.Del
+{
+    margin-top: 50px;
+    position: absolute;
+    width: 100px;
+    left: 50%;
+    margin-left: -50px;
+    color: red;
+}
+
+@keyframes App-logo-spin 
+{
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.App-logo 
+{
+    margin-top: 100px;
+    position: absolute;
+    width: 100px;
+    left: 50%;
+    margin-left: -50px;
+    animation: App-logo-spin infinite 20s linear;
+    height: 80px;
+}
