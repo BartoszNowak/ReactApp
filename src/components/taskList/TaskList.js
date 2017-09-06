@@ -2,45 +2,20 @@ import React from 'react';
 import './TaskList.css';
 import Task from '../task/Task';
 import $ from 'jquery';
+import api from '../../api.js';
 
 export default class TaskList extends React.Component
 {
-    constructor() 
+    constructor(props) 
     {
-        super();
-        this.tasks =
-        [
-            {
-                "id": "a",
-                "description": "a",
-                "taskData": 
-                {
-                    "numbers": [],
-                    "operation": "ADD"
-                },
-                "result": 
-                {
-                    "value": 0
-                }
-            }
-        ]
-
-    }
-
-    componentDidMount() 
-    {
-        $.get("http://localhost:8080/tasks", function(data){
-            console.log(data);
-            this.setState({tasks: data}, () => {
-                console.log(this.tasks);
-            });
-        }.bind(this))
-        .then(result => {
-            var testTab = 
+        super(props);
+        this.state = 
+        {
+            tasks:
             [
                 {
-                    "id": "b",
-                    "description": "b",
+                    "id": "a",
+                    "description": "a",
                     "taskData": 
                     {
                         "numbers": [],
@@ -52,31 +27,31 @@ export default class TaskList extends React.Component
                     }
                 }
             ]
-            testTab = result;
-            console.log(testTab);
-            console.log(result);
-            this.setState({tasks: result}, () => {
-                console.log(this.tasks);
-              });
-            console.log(this.tasks);
-        })
-        .catch(error => {
-            console.log(error);
+        }
+
+    }
+
+    componentWillMount()
+    {
+        api.getTasks().then((res) => {
+            this.setState({
+                tasks: res
+            })
         });
     }
 
     render()
     {
+        console.log("Tasks: ", this.state.tasks);
         var list = [];
         for (var i = 0; i < 5; i++) 
         {
-            list.push(<Task key={i} task={this.tasks[0]}/>);
+            list.push(<Task key={i} taskModel={this.state.tasks[0]}/>);
         }
 
         return(
             <div className = "TaskList">
                 {list}
-                <p>{this.tasks[0].description}</p>
             </div>
         );
     }
