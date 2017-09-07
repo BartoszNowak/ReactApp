@@ -1,7 +1,21 @@
 import React from 'react';
+import api from '../../api.js';
+import TaskList from '../taskList/TaskList';
 
 export default class TaskCreation extends React.Component
 {
+    constructor(props)
+    {
+        super(props);
+    }
+
+    addDefaultTask()
+    {
+        var url = "http://localhost:8080/tasks?description=Desc";
+        fetch(url, {method: "post"});
+        TaskList
+    }
+
     render()
     {
         return(
@@ -10,7 +24,7 @@ export default class TaskCreation extends React.Component
                 <input/>
                 <input/>
                 <input/>
-                <button>Create</button>
+                <button onClick={this.addDefaultTask.bind(this)}>Create</button>
             </div>
         );
     }
