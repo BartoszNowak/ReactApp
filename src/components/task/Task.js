@@ -3,33 +3,42 @@ import './Task.css'
 
 export default class Task extends React.Component
 {
-    constructor()
+    constructor(props)
     {
-        super();
-        this.data = 
+        super(props);
+        this.state = 
         {
-            "id": "",
-            "description": "",
-            "taskData": 
+            task:
             {
-                "numbers": [],
-                "operation": "ADD"
-            },
-            "result": 
-            {
-                "value": 0
+                "id": "a",
+                "description": "a",
+                "taskData": 
+                {
+                    "numbers": [],
+                    "operation": "ADD"
+                },
+                "result": 
+                {
+                    "value": 0
+                }
             }
         }
     }
 
+    componentWillReceiveProps(newProps) {
+        this.setState({task: newProps.taskModel});
+    }
+
     render()
     {
+        console.log(this.props);
+
         return(
             <div className = "Task">
-                <p>Task: {this.props.a}</p>
-                <p>Here'll be task desription...</p>
-                <p>1 + 2 + 3 + 4 + 5 + 6 + 7 + ...</p>
-                <p>Result: -1/12</p>
+                <p>Task: {this.state.task.id}</p>
+                <p>{this.state.task.description}</p>
+                <p>{this.state.task.taskData.numbers} {this.state.task.taskData.operation}</p>
+                <p>Result: {this.state.task.result.value}</p>
                 <button>
                     Edit
                 </button>
