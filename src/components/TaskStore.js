@@ -1,5 +1,4 @@
 import { EventEmitter } from "events";
-
 import dispatcher from "./Dispatcher";
 
 class TaskStore extends EventEmitter
@@ -26,6 +25,12 @@ class TaskStore extends EventEmitter
                 }
             ]
         }
+    }
+
+    fetchData()
+    {
+        var url = "http://localhost:8080/tasks";
+        return fetch(url).then((res) => res.json());
     }
 
     getAll()
@@ -60,11 +65,17 @@ class TaskStore extends EventEmitter
         {
             this.createTask();
         }
+
+        if (action.type === "FETCH") 
+        {
+            this.fetchData().then((res) => 
+            {
+                // this.setState({tasks: res});
+            });
+        }
     }
 }
 
-const taskStore = new TaskStore;
+const taskStore = new TaskStore();
 dispatcher.register(taskStore.handleAction.bind(taskStore));
-window.taskStore = taskStore;
-window.dispatcher = dispatcher;
 export default taskStore;

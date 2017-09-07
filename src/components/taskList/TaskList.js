@@ -63,7 +63,7 @@ export default class TaskList extends React.Component
 
     createTask()
     {
-        TaskActions.createTask();
+        TaskActions.loadData();
     }
 
     render()
