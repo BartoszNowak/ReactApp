@@ -1,6 +1,7 @@
 import React from 'react';
 import api from '../../api.js';
 import TaskList from '../taskList/TaskList';
+import * as TaskActions from '../TaskActions';
 
 export default class TaskCreation extends React.Component
 {
@@ -12,8 +13,8 @@ export default class TaskCreation extends React.Component
     addDefaultTask()
     {
         var url = "http://localhost:8080/tasks?description=Desc";
-        fetch(url, {method: "post"});
-        TaskList
+        // fetch(url, {method: "post"});
+        TaskActions.createTask();
     }
 
     render()

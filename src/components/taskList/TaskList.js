@@ -3,6 +3,8 @@ import './TaskList.css';
 import Task from '../task/Task';
 import $ from 'jquery';
 import api from '../../api.js';
+import * as TaskActions from '../TaskActions';
+import TaskStore from '../TaskStore.js';
 
 export default class TaskList extends React.Component
 {
@@ -11,22 +13,7 @@ export default class TaskList extends React.Component
         super(props);
         this.state = 
         {
-            tasks:
-            [
-                {
-                    "id": "a",
-                    "description": "a",
-                    "taskData": 
-                    {
-                        "numbers": [],
-                        "operation": "ADD"
-                    },
-                    "result": 
-                    {
-                        "value": 0
-                    }
-                }
-            ],
+            tasks: TaskStore.getAll(),
             list: []
         }
 
@@ -43,21 +30,28 @@ export default class TaskList extends React.Component
     //     });
     // }
 
+    // componentWillMount()
+    // {
+    //     var taskList = [];
+    //     var tasks = [];
+    //     var amount;
+    //     this.getTasks().then((res) => 
+    //     {
+    //         this.setState({tasks: res}, () => 
+    //         {
+    //             for (var i = 0; i < res.length; i++) 
+    //             {
+    //                 taskList.push(<Task key={i} taskModel={tasks[i]}/>);
+    //             }
+    //             this.setState({list: taskList});
+    //         });
+    //     });
+    // }
+
     componentWillMount()
     {
-        var taskList = [];
-        var tasks = [];
-        var amount;
-        this.getTasks().then((res) => 
-        {
-            this.setState({tasks: res}, () => 
-            {
-                for (var i = 0; i < res.length; i++) 
-                {
-                    taskList.push(<Task key={i} taskModel={tasks[i]}/>);
-                }
-                this.setState({list: taskList});
-            });
+        TaskStore.on("change", () => {
+            this.setState({tasks: TaskStore.getAll()});
         });
     }
 
@@ -67,12 +61,25 @@ export default class TaskList extends React.Component
         return fetch(url).then((res) => res.json());
     }
 
+    createTask()
+    {
+        TaskActions.createTask();
+    }
+
     render()
     {
-        console.log("Tasks: ", this.state.tasks);
+        console.log("Tasks: ", this.state);
+
+        const {tasks} = this.state;
+        const TaskComponents = tasks.map((task) => {
+            return <Task key={task.id} taskModel={task} {...Task}/>;
+        });
+
         return(
             <div className = "TaskList">
-                {this.state.list}
+                <button onClick={this.createTask.bind(this)}>Click me!</button>
+                {/* {this.state.list} */}
+                {TaskComponents}
             </div>
         );
     }
