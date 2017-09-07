@@ -26,7 +26,8 @@ export default class TaskList extends React.Component
                         "value": 0
                     }
                 }
-            ]
+            ],
+            list: []
         }
 
     }
@@ -40,18 +41,34 @@ export default class TaskList extends React.Component
         });
     }
 
+    componentDidUpdate()
+    {
+        //this method updates page after state gets the needed data.
+        var taskList = [];
+        var amount = this.state.tasks.length;
+        for (var i = 0; i < amount; i++) 
+        {
+            taskList.push(<Task key={i} taskModel={this.state.tasks[i]}/>);
+        }
+        this.setState({list: taskList})
+    }
+
     render()
     {
         console.log("Tasks: ", this.state.tasks);
-        var list = [];
-        for (var i = 0; i < 5; i++) 
-        {
-            list.push(<Task key={i} taskModel={this.state.tasks[0]}/>);
-        }
+        //creating list here make it show immediately but the data isn't updated yet, 
+        //so we can't even know how many of these should be instantiated.
+        //
+        // var list = [];
+        // var amount = this.state.tasks.length;
+        // for (var i = 0; i < 5; i++) 
+        // {
+        //     list.push(<Task key={i} taskModel={this.state.tasks[0]}/>);
+        // }
 
         return(
             <div className = "TaskList">
-                {list}
+                {this.state.list}
             </div>
         );
     }
