@@ -33,6 +33,14 @@ class TaskStore extends EventEmitter
         return fetch(url).then((res) => res.json());
     }
 
+    setData()
+    {
+        this.fetchData()
+        .then((data) => this.state = ({tasks: data}))
+        .then(console.log("State: ", this.state.tasks))
+        .then(this.emit("change"));
+    }
+
     getAll()
     {
         return this.state.tasks;
@@ -40,38 +48,22 @@ class TaskStore extends EventEmitter
 
     createTask()
     {
-        const id = "" + Date.now();
-        this.state.tasks.push(
-            {
-                "id": id,
-                "description": "a",
-                "taskData":
-                {
-                    "numbers": [],
-                    "operation": "ADD"
-                },
-                "result":
-                {
-                    "value": 0
-                }
-            });
+        var url = "http://localhost:8080/tasks?description=Desc";
+        fetch(url, { method: "post" });
         this.emit("change");
     }
 
     handleAction(action)
     {
         console.log("Store received an action", action);
-        if (action.type === "e") 
+        if (action.type === "CREATE") 
         {
             this.createTask();
         }
 
         if (action.type === "FETCH") 
         {
-            this.fetchData().then((res) => 
-            {
-                // this.setState({tasks: res});
-            });
+            this.setData();
         }
     }
 }
