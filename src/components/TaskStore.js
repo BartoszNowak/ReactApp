@@ -53,17 +53,37 @@ class TaskStore extends EventEmitter
         this.emit("change");
     }
 
+    deleteTask(id)
+    {
+        var url = "http://localhost:8080/delete/" + id;
+        fetch(url, { method: "delete" });
+        this.emit("change");
+    }
+
+    executeTask(id)
+    {
+        var url = "http://localhost:8080/execute/" + id;
+        fetch(url);
+        this.emit("change");
+    }
+
     handleAction(action)
     {
         console.log("Store received an action", action);
-        if (action.type === "CREATE") 
+        switch(action.type)
         {
-            this.createTask();
-        }
-
-        if (action.type === "FETCH") 
-        {
-            this.setData();
+            case "CREATE":
+                this.createTask();
+                break;
+            case "FETCH":
+                this.setData();
+                break;
+            case "EXECUTE_ONE":
+                this.executeTask(action.id);
+                break;
+            case "DELETE_ONE":
+                this.deleteTask(action.id);
+                break;
         }
     }
 }
