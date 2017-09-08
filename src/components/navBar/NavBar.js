@@ -7,12 +7,12 @@ import * as TaskActions from '../TaskActions';
 
 export default class NavBar extends React.Component
 {
-    executeAll()
+    execAll()
     {
         TaskActions.executeAll();
     }
 
-    deleteAll()
+    delAll()
     {
         TaskActions.deleteAll();
     }
@@ -24,8 +24,8 @@ export default class NavBar extends React.Component
                 <TaskCreation/>
                 <TaskGeneration/>
                 <img src={logo} className="App-logo" alt="logo" />
-                <button onClick={this.executeAll.bind(this)} className="Exec">Execute all</button>
-                <button onClick={this.deleteAll.bind(this)} className="Del">Delete all</button>
+                <button onClick={this.execAll.bind(this)} className="Exec">Execute all</button>
+                <button onClick={this.delAll.bind(this)} className="Del">Delete all</button>
             </div>
         );
     }
