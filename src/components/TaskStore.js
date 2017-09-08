@@ -74,6 +74,20 @@ class TaskStore extends EventEmitter
         this.emit("change");
     }
 
+    deleteAll()
+    {
+        var url = "http://localhost:8080/drop";
+        fetch(url, { method: "delete" });
+        this.emit("change");
+    }
+
+    executeAll()
+    {
+        var url = "http://localhost:8080/execute";
+        fetch(url);
+        this.emit("change");
+    }
+
     handleAction(action)
     {
         console.log("Store received an action", action);
@@ -93,6 +107,12 @@ class TaskStore extends EventEmitter
                 break;
             case "GENERATE":
                 this.generateTasks(action.amount);
+                break;
+            case "EXECUTE_ALL":
+                this.executeAll();
+                break;
+            case "DELETE_ALL":
+                this.deleteAll();
                 break;
         }
     }

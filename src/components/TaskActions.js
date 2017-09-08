@@ -24,3 +24,13 @@ export function generateTasks(amount)
 {
     dispatcher.dispatch({type: "GENERATE", amount});
 }
+
+export function executeAll()
+{
+    dispatcher.dispatch({type: "EXECUTE_ALL"});
+}
+
+export function deleteAll()
+{
+    dispatcher.dispatch({type: "DELETE_ALL"});
+}
