@@ -1,32 +1,17 @@
 import React from 'react';
 import './Task.css'
+import * as TaskActions from '../TaskActions';
 
 export default class Task extends React.Component
 {
-    constructor(props)
+    executeTask()
     {
-        super(props);
-        this.state = 
-        {
-            task:
-            {
-                "id": "a",
-                "description": "a",
-                "taskData": 
-                {
-                    "numbers": [],
-                    "operation": "ADD"
-                },
-                "result": 
-                {
-                    "value": 0
-                }
-            }
-        }
+        TaskActions.executeTask(this.props.taskModel.id);
     }
 
-    componentWillReceiveProps(newProps) {
-        this.setState({task: newProps.taskModel});
+    deleteTask()
+    {
+        TaskActions.deleteTask(this.props.taskModel.id);
     }
 
     render()
@@ -35,17 +20,14 @@ export default class Task extends React.Component
 
         return(
             <div className = "Task">
-                <p>Task: {this.state.task.id}</p>
-                <p>{this.state.task.description}</p>
-                <p>{this.state.task.taskData.numbers} {this.state.task.taskData.operation}</p>
-                <p>Result: {this.state.task.result.value}</p>
-                <button>
-                    Edit
-                </button>
-                <button>
+                <p>Task: {this.props.taskModel.id}</p>
+                <p>{this.props.taskModel.description}</p>
+                <p>{this.props.taskModel.taskData.numbers} {this.props.taskModel.taskData.operation}</p>
+                <p>Result: {this.props.taskModel.result.value}</p>
+                <button onClick={this.executeTask.bind(this)}>
                     Execute
                 </button>
-                <button className="DeleteButton">
+                <button onClick={this.deleteTask.bind(this)} className="DeleteButton">
                     Delete
                 </button>
             </div>

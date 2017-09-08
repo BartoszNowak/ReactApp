@@ -1,7 +1,6 @@
 import React from 'react';
 import NavBar from './components/navBar/NavBar';
 import TaskList from './components/taskList/TaskList';
-import $ from 'jquery';
 
 export default class Test extends React.Component 
 {
