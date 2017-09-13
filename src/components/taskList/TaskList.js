@@ -18,6 +18,8 @@ export default class TaskList extends React.Component
 
     componentWillMount()
     {
+        //Load initial data
+        TaskActions.loadData();
         TaskStore.on("change", () => {
             this.setState({tasks: TaskStore.getAll()});
         });
