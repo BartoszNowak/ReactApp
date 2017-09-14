@@ -1,8 +1,8 @@
 import dispatcher from './Dispatcher';
 
-export function createTask(description)
+export function createTask(description, operation)
 {
-    dispatcher.dispatch({type: "CREATE", description});
+    dispatcher.dispatch({type: "CREATE", description, operation});
 }
 
 export function loadData()
@@ -33,4 +33,9 @@ export function executeAll()
 export function deleteAll()
 {
     dispatcher.dispatch({type: "DELETE_ALL"});
+}
+
+export function addNumberToTask(id, number)
+{
+    dispatcher.dispatch({type: "ADD_NUMBER", id, number});
 }

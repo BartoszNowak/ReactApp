@@ -46,9 +46,9 @@ class TaskStore extends EventEmitter
         return this.state.tasks;
     }
 
-    createTask(description)
+    createTask(description, operation)
     {
-        var url = "http://localhost:8080/tasks?description=" + description;
+        var url = "http://localhost:8080/tasks?description="+ description + "&operation=" + operation;
         fetch(url, { method: "post" });
         this.emit("change");
     }
@@ -88,13 +88,20 @@ class TaskStore extends EventEmitter
         this.emit("change");
     }
 
+    addNumber(id, number)
+    {
+        var url = "http://localhost:8080/taskdata/" + id + "?number=" + number;
+        fetch(url, { method: "put" });
+        this.emit("change");
+    }
+
     handleAction(action)
     {
         console.log("Store received an action", action);
         switch(action.type)
         {
             case "CREATE":
-                this.createTask(action.description);
+                this.createTask(action.description, action.operation);
                 break;
             case "FETCH":
                 this.setData();
@@ -113,6 +120,9 @@ class TaskStore extends EventEmitter
                 break;
             case "DELETE_ALL":
                 this.deleteAll();
+                break;
+            case "ADD_NUMBER":
+                this.addNumber(action.id, action.number);
                 break;
         }
     }

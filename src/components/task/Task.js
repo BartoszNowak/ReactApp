@@ -4,6 +4,12 @@ import * as TaskActions from '../TaskActions';
 
 export default class Task extends React.Component
 {
+    constructor(props)
+    {
+        super(props);
+        this.state = {inputValue: ""}
+    }
+
     executeTask()
     {
         TaskActions.executeTask(this.props.taskModel.id);
@@ -67,6 +73,8 @@ export default class Task extends React.Component
                 <p>{this.props.taskModel.description}</p>
                 <p>{this.taskFormatNumbers()}</p>
                 <p>Result: {this.props.taskModel.result.value}</p>
+                <input onChange={this.handleChange.bind(this)} value={this.state.inputValue} type="number" placeholder="Number"/>
+                <button onClick={this.generateTasks.bind(this)}>Add</button>
                 <button onClick={this.executeTask.bind(this)}>
                     Execute
                 </button>
@@ -75,5 +83,20 @@ export default class Task extends React.Component
                 </button>
             </div>
         );
+    }
+
+    handleChange(event)
+    {
+        this.setState({inputValue: event.target.value});
+        console.log(this.state.inputValue);
+    }
+
+    generateTasks()
+    {
+        if(this.state.inputValue !== "")
+        {
+            TaskActions.addNumberToTask(this.props.taskModel.id, this.state.inputValue);
+        }
+        this.setState({inputValue: ""});
     }
 }
