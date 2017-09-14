@@ -11,7 +11,10 @@ export default class TaskGeneration extends React.Component
 
     generateTasks()
     {
-        TaskActions.generateTasks(this.state.inputValue);
+        if(this.state.inputValue !== "")
+        {
+            TaskActions.generateTasks(this.state.inputValue);
+        }
         this.setState({inputValue: ""});
     }
 

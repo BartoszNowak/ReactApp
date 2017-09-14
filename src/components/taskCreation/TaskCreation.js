@@ -11,7 +11,10 @@ export default class TaskCreation extends React.Component
 
     addDefaultTask()
     {
-        TaskActions.createTask(this.state.inputValue);
+        if(this.state.inputValue !== "") 
+        {
+            TaskActions.createTask(this.state.inputValue);
+        }
         this.setState({inputValue: ""});
     }
 
