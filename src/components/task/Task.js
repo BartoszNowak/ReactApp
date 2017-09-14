@@ -25,13 +25,17 @@ export default class Task extends React.Component
         var numbers = this.props.taskModel.taskData.numbers;
         var result = "";
         
-        if(numbers.length !== 0)
+        if(numbers.length > 1)
         {
             result += numbers[0];
             for(var i = 1; i < numbers.length; i++)
             {
                 result += this.getSign() + numbers[i];
             }
+        }
+        else if(numbers.length === 1)
+        {
+            result += numbers[0] + this.getSign();
         }
         else
         {
