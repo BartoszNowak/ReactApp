@@ -18,7 +18,6 @@ export default class TaskList extends React.Component
 
     componentWillMount()
     {
-        //Load initial data
         TaskActions.loadData();
         TaskStore.on("change", () => {
             this.setState({tasks: TaskStore.getAll()});
@@ -35,7 +34,7 @@ export default class TaskList extends React.Component
         console.log("Tasks: ", this.state);
 
         const {tasks} = this.state;
-        const TaskComponents = tasks.map((task) => {
+        const TaskComponents = Array.isArray(tasks) && tasks.map((task) => {
             return <Task key={task.id} taskModel={task} {...Task}/>;
         });
 

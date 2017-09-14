@@ -14,36 +14,47 @@ export default class Task extends React.Component
         TaskActions.deleteTask(this.props.taskModel.id);
     }
 
-    //refactor this please..
     taskFormatNumbers()
     {
         var numbers = this.props.taskModel.taskData.numbers;
         var result = "";
+        
+        if(numbers.length !== 0)
+        {
+            result += numbers[0];
+            for(var i = 1; i < numbers.length; i++)
+            {
+                result += this.getSign() + numbers[i];
+            }
+        }
+        else
+        {
+            result = this.getSign();
+        }
+        return result;
+    }
+
+    getSign()
+    {
         var sign;
         switch(this.props.taskModel.taskData.operation)
         {
             case "ADD":
-            sign = " + ";
-            break;
+                sign = " + ";
+                break;
             case "SUBTRACT":
-            sign = " - ";
-            break;
+                sign = " - ";
+                break;
             case "MULTIPLY":
-            sign = " * ";
-            break;
+                sign = " * ";
+                break;
             case "DIVIDE":
-            sign = " / ";
-            break;
+                sign = " / ";
+                break;
             default:
-            sign = " ? ";
+                sign = " ? ";
         }
-        if(numbers.length === 0) return sign;
-        for(var i = 0; i < numbers.length - 1; i++)
-        {
-            result += numbers[i] + sign;
-        }
-        result += numbers[numbers.length - 1];
-        return result;
+        return sign;
     }
 
     render()
