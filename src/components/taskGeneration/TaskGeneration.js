@@ -9,21 +9,6 @@ export default class TaskGeneration extends React.Component
         this.state = {inputValue: ""}
     }
 
-    generateTasks()
-    {
-        if(this.state.inputValue !== "")
-        {
-            TaskActions.generateTasks(this.state.inputValue);
-        }
-        this.setState({inputValue: ""});
-    }
-
-    handleChange(event)
-    {
-        this.setState({inputValue: event.target.value});
-        console.log(this.state.inputValue);
-    }
-
     render()
     {
         return(
@@ -33,5 +18,19 @@ export default class TaskGeneration extends React.Component
                 <button onClick={this.generateTasks.bind(this)}>Create</button>
             </div>
         );
+    }
+
+    handleChange(event)
+    {
+        this.setState({inputValue: event.target.value});
+    }
+
+    generateTasks()
+    {
+        if(this.state.inputValue !== "")
+        {
+            TaskActions.generateTasks(this.state.inputValue);
+        }
+        this.setState({inputValue: ""});
     }
 }

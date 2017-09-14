@@ -10,14 +10,24 @@ export default class Task extends React.Component
         this.state = {inputValue: ""}
     }
 
-    executeTask()
+    render()
     {
-        TaskActions.executeTask(this.props.taskModel.id);
-    }
-
-    deleteTask()
-    {
-        TaskActions.deleteTask(this.props.taskModel.id);
+        return(
+            <div className = "Task">
+                <p>Task: {this.props.taskModel.id}</p>
+                <p>{this.props.taskModel.description}</p>
+                <p>{this.taskFormatNumbers()}</p>
+                <p>Result: {this.props.taskModel.result.value}</p>
+                <input onChange={this.handleChange.bind(this)} value={this.state.inputValue} type="number" placeholder="Number"/>
+                <button onClick={this.generateTasks.bind(this)}>Add</button>
+                <button onClick={this.executeTask.bind(this)}>
+                    Execute
+                </button>
+                <button onClick={this.deleteTask.bind(this)} className="DeleteButton">
+                    Delete
+                </button>
+            </div>
+        );
     }
 
     taskFormatNumbers()
@@ -67,32 +77,9 @@ export default class Task extends React.Component
         return sign;
     }
 
-    render()
-    {
-        console.log(this.props);
-
-        return(
-            <div className = "Task">
-                <p>Task: {this.props.taskModel.id}</p>
-                <p>{this.props.taskModel.description}</p>
-                <p>{this.taskFormatNumbers()}</p>
-                <p>Result: {this.props.taskModel.result.value}</p>
-                <input onChange={this.handleChange.bind(this)} value={this.state.inputValue} type="number" placeholder="Number"/>
-                <button onClick={this.generateTasks.bind(this)}>Add</button>
-                <button onClick={this.executeTask.bind(this)}>
-                    Execute
-                </button>
-                <button onClick={this.deleteTask.bind(this)} className="DeleteButton">
-                    Delete
-                </button>
-            </div>
-        );
-    }
-
     handleChange(event)
     {
         this.setState({inputValue: event.target.value});
-        console.log(this.state.inputValue);
     }
 
     generateTasks()
@@ -102,5 +89,15 @@ export default class Task extends React.Component
             TaskActions.addNumberToTask(this.props.taskModel.id, this.state.inputValue);
         }
         this.setState({inputValue: ""});
+    }
+
+    executeTask()
+    {
+        TaskActions.executeTask(this.props.taskModel.id);
+    }
+
+    deleteTask()
+    {
+        TaskActions.deleteTask(this.props.taskModel.id);
     }
 }

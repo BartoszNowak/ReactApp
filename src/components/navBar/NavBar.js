@@ -7,16 +7,6 @@ import * as TaskActions from '../TaskActions';
 
 export default class NavBar extends React.Component
 {
-    execAll()
-    {
-        TaskActions.executeAll();
-    }
-
-    delAll()
-    {
-        TaskActions.deleteAll();
-    }
-
     render()
     {
         return(
@@ -28,5 +18,15 @@ export default class NavBar extends React.Component
                 <button onClick={this.delAll.bind(this)} className="Del">Delete all</button>
             </div>
         );
+    }
+
+    execAll()
+    {
+        TaskActions.executeAll();
+    }
+
+    delAll()
+    {
+        TaskActions.deleteAll();
     }
 }

@@ -37,7 +37,6 @@ class TaskStore extends EventEmitter
     {
         this.fetchData()
         .then((data) => this.state = ({tasks: data}))
-        .then(console.log("State: ", this.state.tasks))
         .then(this.emit("change"));
     }
 
@@ -97,7 +96,6 @@ class TaskStore extends EventEmitter
 
     handleAction(action)
     {
-        console.log("Store received an action", action);
         switch(action.type)
         {
             case "CREATE":

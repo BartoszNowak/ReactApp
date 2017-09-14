@@ -24,15 +24,8 @@ export default class TaskList extends React.Component
         });
     }
 
-    createTask()
-    {
-        TaskActions.loadData();
-    }
-
     render()
     {
-        console.log("Tasks: ", this.state);
-
         const {tasks} = this.state;
         const TaskComponents = Array.isArray(tasks) && tasks.map((task) => {
             return <Task key={task.id} taskModel={task} {...Task}/>;
@@ -40,9 +33,14 @@ export default class TaskList extends React.Component
 
         return(
             <div className = "TaskList">
-                <button onClick={this.createTask.bind(this)}>Load!</button>
+                <button onClick={this.refresh.bind(this)}>Load!</button>
                 {TaskComponents}
             </div>
         );
+    }
+
+    refresh()
+    {
+        TaskActions.loadData();
     }
 }

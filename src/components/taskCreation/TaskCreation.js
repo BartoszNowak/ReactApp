@@ -14,27 +14,6 @@ export default class TaskCreation extends React.Component
         }
     }
 
-    addDefaultTask()
-    {
-        if(this.state.inputValue !== "") 
-        {
-            TaskActions.createTask(this.state.inputValue, this.state.dropDownValue);
-        }
-        this.setState({inputValue: ""});
-    }
-
-    handleChange(event)
-    {
-        this.setState({inputValue: event.target.value});
-        console.log(this.state.inputValue);
-    }
-
-    handleOperationChange(event)
-    {
-        this.setState({dropDownValue: event.target.value});
-        console.log(this.state.dropDownValue);
-    }
-
     render()
     {
         return(
@@ -47,8 +26,27 @@ export default class TaskCreation extends React.Component
                     <option value="MULTIPLY">*</option>
                     <option value="DIVIDE">/</option>
                 </select>
-                <button onClick={this.addDefaultTask.bind(this)}>Create</button>
+                <button onClick={this.addTask.bind(this)}>Create</button>
             </div>
         );
+    }
+
+    handleChange(event)
+    {
+        this.setState({inputValue: event.target.value});
+    }
+
+    handleOperationChange(event)
+    {
+        this.setState({dropDownValue: event.target.value});
+    }
+
+    addTask()
+    {
+        if(this.state.inputValue !== "") 
+        {
+            TaskActions.createTask(this.state.inputValue, this.state.dropDownValue);
+        }
+        this.setState({inputValue: ""});
     }
 }
