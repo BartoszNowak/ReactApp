@@ -15,21 +15,16 @@ class TaskStore extends EventEmitter
     fetchData()
     {
         var url = "http://localhost:8080/tasks";
-        return fetch(url).then((res) => {
-            let result = res.json()
-            console.log(result)
-            return result
-        });
+        return fetch(url).then((res) => res.json());
     }
 
     setData()
     {
         this.fetchData()
         .then((data) => {
-            console.log('received',data,this.state)
-            this.state = ({tasks: data})
-            this.emit("change")
-        })
+            this.state = ({tasks: data});
+            this.emit("change");
+        });
         //.then(this.emit("change"));
     }
 
@@ -38,112 +33,50 @@ class TaskStore extends EventEmitter
         return this.state.tasks;
     }
 
-    createTask(description, operation)
-    {
-        var url = "http://localhost:8080/tasks?description="+ description + "&operation=" + operation;
-        fetch(url, { method: "post" })
-        .then((data) => {
-            console.log('try to fetch data',data)
-            this.setData()
-        }).catch((error) => console.log(error));
-        this.emit("change");
-    }
-
-    deleteTask(id)
-    {
-        var url = "http://localhost:8080/delete/" + id;
-        fetch(url, { method: "delete" })
-        .then((data) => {
-            console.log('try to fetch data',data)
-            this.setData()
-        }).catch((error) => console.log(error));
-        this.emit("change");
-    }
-
-    executeTask(id)
-    {
-        var url = "http://localhost:8080/execute/" + id;
-        fetch(url)
-        .then((data) => {
-            console.log('try to fetch data',data)
-            this.setData()
-        }).catch((error) => console.log(error));
-        this.emit("change");
-    }
-
-    generateTasks(amount)
-    {
-        var url = "http://localhost:8080/generate?amount=" + amount;
-        fetch(url, { method: "post" })
-        .then((data) => {
-            console.log('try to fetch data',data)
-            this.setData()
-        }).catch((error) => console.log(error));
-        this.emit("change");
-    }
-
-    deleteAll()
-    {
-        var url = "http://localhost:8080/drop";
-        fetch(url, { method: "delete" })
-        .then((data) => {
-            console.log('try to fetch data',data)
-            this.setData()
-        }).catch((error) => console.log(error));
-        this.emit("change");
-    }
-
-    executeAll()
-    {
-        var url = "http://localhost:8080/execute";
-        fetch(url)
-        .then((data) => {
-            console.log('try to fetch data',data)
-            this.setData()
-        }).catch((error) => console.log(error));
-        this.emit("change");
-    }
-
-    addNumber(id, number)
-    {
-        var url = "http://localhost:8080/taskdata/" + id + "?number=" + number;
-        fetch(url, { method: "put" })
-        .then((data) => {
-            console.log('try to fetch data',data)
-            this.setData()
-        }).catch((error) => console.log(error));
-        this.emit("change");
-    }
-
     handleAction(action)
     {
         switch(action.type)
         {
             case "CREATE":
-                this.createTask(action.description, action.operation);
+                var url = "http://localhost:8080/tasks?description="+ action.description + "&operation=" + action.operation;
+                this.refreshViewAfterRequest(url, "post");
                 break;
             case "FETCH":
                 this.setData();
                 break;
             case "EXECUTE_ONE":
-                this.executeTask(action.id);
+                var url = "http://localhost:8080/execute/" + action.id;
+                this.refreshViewAfterRequest(url, "get");
                 break;
             case "DELETE_ONE":
-                this.deleteTask(action.id);
+                var url = "http://localhost:8080/delete/" + action.id;
+                this.refreshViewAfterRequest(url, "delete");
                 break;
             case "GENERATE":
-                this.generateTasks(action.amount);
+                var url = "http://localhost:8080/generate?amount=" + action.amount;
+                this.refreshViewAfterRequest(url, "post");
                 break;
             case "EXECUTE_ALL":
-                this.executeAll();
+                var url = "http://localhost:8080/execute";
+                this.refreshViewAfterRequest(url, "get");
                 break;
             case "DELETE_ALL":
-                this.deleteAll();
+                var url = "http://localhost:8080/drop";
+                this.refreshViewAfterRequest(url, "delete");
                 break;
             case "ADD_NUMBER":
-                this.addNumber(action.id, action.number);
+                var url = "http://localhost:8080/taskdata/" + action.id + "?number=" + action.number;
+                this.refreshViewAfterRequest(url, "put");
                 break;
         }
+    }
+
+    refreshViewAfterRequest(url, method)
+    {
+        fetch(url, { method: method })
+        .then(() => this.setData())
+        .catch((error) => console.log(error));
+        this.emit("change");
     }
 }
 
