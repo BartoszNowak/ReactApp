@@ -33,14 +33,8 @@ export default class TaskList extends React.Component
 
         return(
             <div className = "TaskList">
-                <button onClick={this.refresh.bind(this)}>Load!</button>
                 {TaskComponents}
             </div>
         );
-    }
-
-    refresh()
-    {
-        TaskActions.loadData();
     }
 }
