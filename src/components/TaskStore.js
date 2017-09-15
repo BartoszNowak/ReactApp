@@ -15,11 +15,11 @@ class TaskStore extends EventEmitter
     fetchData()
     {
         var url = "http://localhost:8080/tasks";
-        fetch(url).
-            then((res) => 
+        fetch(url)
+            .then((res) => 
             {
-                res.json().
-                    then((data) => 
+                res.json()
+                    .then((data) => 
                     {
                         this.state = ({ tasks: data });
                         this.emit("change");
@@ -34,39 +34,41 @@ class TaskStore extends EventEmitter
 
     handleAction(action)
     {
+        var url;
         switch(action.type)
         {
             case "CREATE":
-                var url = "http://localhost:8080/tasks?description="+ action.description + "&operation=" + action.operation;
+                url = "http://localhost:8080/tasks?description="+ action.description + "&operation=" + action.operation;
                 this.refreshViewAfterRequest(url, "post");
                 break;
             case "FETCH":
                 this.fetchData();
                 break;
             case "EXECUTE_ONE":
-                var url = "http://localhost:8080/execute/" + action.id;
+                url = "http://localhost:8080/execute/" + action.id;
                 this.refreshViewAfterRequest(url, "get");
                 break;
             case "DELETE_ONE":
-                var url = "http://localhost:8080/delete/" + action.id;
+                url = "http://localhost:8080/delete/" + action.id;
                 this.refreshViewAfterRequest(url, "delete");
                 break;
             case "GENERATE":
-                var url = "http://localhost:8080/generate?amount=" + action.amount;
+                url = "http://localhost:8080/generate?amount=" + action.amount;
                 this.refreshViewAfterRequest(url, "post");
                 break;
             case "EXECUTE_ALL":
-                var url = "http://localhost:8080/execute";
+                url = "http://localhost:8080/execute";
                 this.refreshViewAfterRequest(url, "get");
                 break;
             case "DELETE_ALL":
-                var url = "http://localhost:8080/drop";
+                url = "http://localhost:8080/drop";
                 this.refreshViewAfterRequest(url, "delete");
                 break;
             case "ADD_NUMBER":
-                var url = "http://localhost:8080/taskdata/" + action.id + "?number=" + action.number;
+                url = "http://localhost:8080/taskdata/" + action.id + "?number=" + action.number;
                 this.refreshViewAfterRequest(url, "put");
                 break;
+            default:
         }
     }
 
