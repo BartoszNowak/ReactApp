@@ -15,17 +15,16 @@ class TaskStore extends EventEmitter
     fetchData()
     {
         var url = "http://localhost:8080/tasks";
-        return fetch(url).then((res) => res.json());
-    }
-
-    setData()
-    {
-        this.fetchData()
-        .then((data) => {
-            this.state = ({tasks: data});
-            this.emit("change");
-        });
-        //.then(this.emit("change"));
+        fetch(url).
+            then((res) => 
+            {
+                res.json().
+                    then((data) => 
+                    {
+                        this.state = ({ tasks: data });
+                        this.emit("change");
+                    });
+            });
     }
 
     getAll()
@@ -42,7 +41,7 @@ class TaskStore extends EventEmitter
                 this.refreshViewAfterRequest(url, "post");
                 break;
             case "FETCH":
-                this.setData();
+                this.fetchData();
                 break;
             case "EXECUTE_ONE":
                 var url = "http://localhost:8080/execute/" + action.id;
@@ -74,7 +73,7 @@ class TaskStore extends EventEmitter
     refreshViewAfterRequest(url, method)
     {
         fetch(url, { method: method })
-        .then(() => this.setData())
+        .then(() => this.fetchData())
         .catch((error) => console.log(error));
         this.emit("change");
     }
