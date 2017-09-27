@@ -1,6 +1,7 @@
 import React from 'react';
 import './Task.css'
 import * as TaskActions from '../TaskActions';
+import CONST from '../../Const.js';
 
 export default class Task extends React.Component
 {
@@ -59,16 +60,16 @@ export default class Task extends React.Component
         var sign;
         switch(this.props.taskModel.taskData.operation)
         {
-            case "ADD":
+            case CONST.OPERATIONS.ADD:
                 sign = " + ";
                 break;
-            case "SUBTRACT":
+            case CONST.OPERATIONS.SUBTRACT:
                 sign = " - ";
                 break;
-            case "MULTIPLY":
+            case CONST.OPERATIONS.MULTIPLY:
                 sign = " * ";
                 break;
-            case "DIVIDE":
+            case CONST.OPERATIONS.DIVIDE:
                 sign = " / ";
                 break;
             default:

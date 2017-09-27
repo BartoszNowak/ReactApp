@@ -1,6 +1,7 @@
 import React from 'react';
 import * as TaskActions from '../TaskActions';
 import './TaskCreation.css';
+import CONST from '../../Const.js';
 
 export default class TaskCreation extends React.Component
 {
@@ -10,7 +11,7 @@ export default class TaskCreation extends React.Component
         this.state = 
         {
             inputValue: "",
-            dropDownValue: "ADD"
+            dropDownValue: CONST.OPERATIONS.ADD
         }
     }
 
@@ -21,10 +22,10 @@ export default class TaskCreation extends React.Component
                 <h4>Add new task:</h4>
                 <input onChange={this.handleChange.bind(this)} value={this.state.inputValue} type="text" placeholder="Description"/>
                 <select onChange={this.handleOperationChange.bind(this)} className="Operation" name="operations">
-                    <option value="ADD">+</option>
-                    <option value="SUBTRACT">-</option>
-                    <option value="MULTIPLY">*</option>
-                    <option value="DIVIDE">/</option>
+                    <option value={CONST.OPERATIONS.ADD}>+</option>
+                    <option value={CONST.OPERATIONS.SUBTRACT}>-</option>
+                    <option value={CONST.OPERATIONS.MULTIPLY}>*</option>
+                    <option value={CONST.OPERATIONS.DIVIDE}>/</option>
                 </select>
                 <button onClick={this.addTask.bind(this)}>Create</button>
             </div>

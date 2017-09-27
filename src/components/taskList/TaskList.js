@@ -3,6 +3,7 @@ import './TaskList.css';
 import Task from '../task/Task';
 import * as TaskActions from '../TaskActions';
 import TaskStore from '../TaskStore.js';
+import CONST from '../../Const.js';
 
 export default class TaskList extends React.Component
 {
@@ -19,7 +20,7 @@ export default class TaskList extends React.Component
     componentWillMount()
     {
         TaskActions.loadData();
-        TaskStore.on("change", () => {
+        TaskStore.on(CONST.EVENTS.CHANGE, () => {
             this.setState({tasks: TaskStore.getAll()});
         });
     }

@@ -1,5 +1,34 @@
 import { EventEmitter } from "events";
 import dispatcher from "./Dispatcher";
+import CONST from '../Const.js';
+
+const SERVER = "http://192.168.32.13:8090";
+
+const HTTP_METHODS = 
+{ 
+    GET: "get", 
+    POST: "post", 
+    PUT: "put", 
+    DELETE: "delete"
+}
+
+const ENDPOINTS = 
+{ 
+    TASKS: "/tasks", 
+    EXECUTE: "/execute", 
+    DELETE: "/delete", 
+    GENERATE: "/generate", 
+    DROP: "/drop", 
+    TASK_DATA: "/taskdata"
+}
+
+const PARAMETERS = 
+{ 
+    DESCRIPTION: "description=", 
+    OPERATION: "operation=", 
+    AMOUNT: "amount=", 
+    NUMBER: "number=" 
+}
 
 class TaskStore extends EventEmitter
 {
@@ -14,7 +43,7 @@ class TaskStore extends EventEmitter
 
     fetchData()
     {
-        var url = "http://localhost:8080/tasks";
+        let url = SERVER + ENDPOINTS.TASKS;
         fetch(url)
             .then((res) => 
             {
@@ -22,7 +51,7 @@ class TaskStore extends EventEmitter
                     .then((data) => 
                     {
                         this.state = ({ tasks: data });
-                        this.emit("change");
+                        this.emit(CONST.EVENTS.CHANGE);
                     });
             });
     }
@@ -34,39 +63,40 @@ class TaskStore extends EventEmitter
 
     handleAction(action)
     {
-        var url;
+        let url;
         switch(action.type)
         {
-            case "CREATE":
-                url = "http://localhost:8080/tasks?description="+ action.description + "&operation=" + action.operation;
-                this.refreshViewAfterRequest(url, "post");
+            case CONST.EVENTS.CREATE:
+                url = SERVER + ENDPOINTS.TASKS + "?" + PARAMETERS.DESCRIPTION
+                + action.description + "&" + PARAMETERS.OPERATION + action.operation;
+                this.refreshViewAfterRequest(url, HTTP_METHODS.POST);
                 break;
-            case "FETCH":
+            case CONST.EVENTS.FETCH:
                 this.fetchData();
                 break;
-            case "EXECUTE_ONE":
-                url = "http://localhost:8080/execute/" + action.id;
-                this.refreshViewAfterRequest(url, "get");
+            case CONST.EVENTS.EXECUTE_ONE:
+                url = SERVER + ENDPOINTS.EXECUTE + "/" + action.id;
+                this.refreshViewAfterRequest(url, HTTP_METHODS.GET);
                 break;
-            case "DELETE_ONE":
-                url = "http://localhost:8080/delete/" + action.id;
-                this.refreshViewAfterRequest(url, "delete");
+            case CONST.EVENTS.DELETE_ONE:
+                url = SERVER + ENDPOINTS.DELETE + "/" + action.id;
+                this.refreshViewAfterRequest(url, HTTP_METHODS.DELETE);
                 break;
-            case "GENERATE":
-                url = "http://localhost:8080/generate?amount=" + action.amount;
-                this.refreshViewAfterRequest(url, "post");
+            case CONST.EVENTS.GENERATE:
+                url = SERVER + ENDPOINTS.GENERATE + "?" + PARAMETERS.AMOUNT + action.amount;
+                this.refreshViewAfterRequest(url, HTTP_METHODS.POST);
                 break;
-            case "EXECUTE_ALL":
-                url = "http://localhost:8080/execute";
-                this.refreshViewAfterRequest(url, "get");
+            case CONST.EVENTS.EXECUTE_ALL:
+                url = SERVER + ENDPOINTS.EXECUTE;
+                this.refreshViewAfterRequest(url, HTTP_METHODS.GET);
                 break;
-            case "DELETE_ALL":
-                url = "http://localhost:8080/drop";
-                this.refreshViewAfterRequest(url, "delete");
+            case CONST.EVENTS.DELETE_ALL:
+                url = SERVER + ENDPOINTS.DROP;
+                this.refreshViewAfterRequest(url, HTTP_METHODS.DELETE);
                 break;
-            case "ADD_NUMBER":
-                url = "http://localhost:8080/taskdata/" + action.id + "?number=" + action.number;
-                this.refreshViewAfterRequest(url, "put");
+            case CONST.EVENTS.ADD_NUMBER:
+                url = SERVER + ENDPOINTS.TASK_DATA + "/" + action.id + "?" + PARAMETERS.NUMBER + action.number;
+                this.refreshViewAfterRequest(url, HTTP_METHODS.PUT);
                 break;
             default:
         }
@@ -77,7 +107,7 @@ class TaskStore extends EventEmitter
         fetch(url, { method: method })
         .then(() => this.fetchData())
         .catch((error) => console.log(error));
-        this.emit("change");
+        this.emit(CONST.EVENTS.CHANGE);
     }
 }
 
