@@ -41,21 +41,6 @@ class TaskStore extends EventEmitter
         }
     }
 
-    fetchData()
-    {
-        let url = SERVER + ENDPOINTS.TASKS;
-        fetch(url)
-            .then((res) => 
-            {
-                res.json()
-                    .then((data) => 
-                    {
-                        this.state = ({ tasks: data });
-                        this.emit(CONST.EVENTS.CHANGE);
-                    });
-            });
-    }
-
     getAll()
     {
         return this.state.tasks;
@@ -108,6 +93,21 @@ class TaskStore extends EventEmitter
         .then(() => this.fetchData())
         .catch((error) => console.log(error));
         this.emit(CONST.EVENTS.CHANGE);
+    }
+
+    fetchData()
+    {
+        let url = SERVER + ENDPOINTS.TASKS;
+        fetch(url)
+            .then((res) => 
+            {
+                res.json()
+                    .then((data) => 
+                    {
+                        this.state = ({ tasks: data });
+                        this.emit(CONST.EVENTS.CHANGE);
+                    });
+            });
     }
 }
 
